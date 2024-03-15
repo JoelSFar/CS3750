@@ -37,7 +37,7 @@ export default function Register() {
             return;
         }
 
-        const response = await fetch("http://localhost:5000/register", {
+        const response = await fetch("http://localhost:5001/register", {
             credentials: 'include',
             method: "POST",
             headers: {
