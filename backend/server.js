@@ -4,7 +4,7 @@ const MongoStore = require('connect-mongo'); // new
 const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 app.use(cors({origin: 'http://localhost:3000', credentials: true, }));
 
 app.use(express.json());
