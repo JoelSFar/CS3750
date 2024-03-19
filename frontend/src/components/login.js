@@ -12,7 +12,7 @@ export default function Login() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch("http://localhost:5000/prev", { method: 'GET', credentials: 'include'});
+            const response = await fetch("http://localhost:5001/prev", { method: 'GET', credentials: 'include'});
             let data = await response.json();
 
             console.log("data is: ", data);
@@ -28,7 +28,7 @@ export default function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await fetch("http://localhost:5000/auth", {
+        const response = await fetch("http://localhost:5001/auth", {
             credentials: "include",
             method: "POST",
             headers: {

@@ -9,10 +9,10 @@ const [role, setRole] = useState('');
 
 useEffect(() => {
     const fetchData = async () => {
-        const response = await fetch("http://localhost:5000/prev", { method: 'GET', credentials: 'include'});
+        const response = await fetch("http://localhost:5001/prev", { method: 'GET', credentials: 'include'});
         const data = await response.json();
         if (data) {
-            const userInfoFetch = await fetch("http://localhost:5000/personalData", { method: 'GET', credentials: 'include'});
+            const userInfoFetch = await fetch("http://localhost:5001/personalData", { method: 'GET', credentials: 'include'});
             const userdata = await userInfoFetch.json();
             console.log(userdata);
             setName(userdata.userName);
@@ -27,7 +27,7 @@ useEffect(() => {
 
 const handleclick = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:5000/logout", { method: 'GET', credentials: 'include'})
+    const response = await fetch("http://localhost:5001/logout", { method: 'GET', credentials: 'include'})
     alert("logged out");
     navigate("/");
 }
