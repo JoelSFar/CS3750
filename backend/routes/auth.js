@@ -100,7 +100,10 @@ authRoutes.route("/prev").get(async function (req, res) {
     console.log("userName: ", req.session.userName);
     console.log("passwordHash: ", req.session.passwordHash);
 
-    const userRecord = await get_user_by_hash(req.session.userName, req.session.passwordHash);
+    const userRecord = await get_user_by_hash(
+      req.session.userName,
+      req.session.passwordHash
+    );
 
     if (userRecord) {
       console.log("user found");
@@ -110,7 +113,7 @@ authRoutes.route("/prev").get(async function (req, res) {
       res.json({ message: "user not found" });
     }
   } else {
-    console.log("not logged int")
+    console.log("not logged int");
     // No valid session
     //res.status(200).send("not logged in");
     res.json({ message: "not logged in" });
@@ -130,9 +133,9 @@ authRoutes.route("/personalData").get(async function (req, res) {
 });
 
 authRoutes.route("/logout").get(async function (req, res) {
-    req.session.destroy();
-    // console.log("/logout route");
-    res.json(null);
+  req.session.destroy();
+  // console.log("/logout route");
+  res.json(null);
 });
 
 module.exports = authRoutes;
