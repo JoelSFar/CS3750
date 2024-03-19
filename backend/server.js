@@ -32,3 +32,4 @@ app.listen(port, () => {
 });
 
 app.use(require("./routes/auth"));
+app.use(require("./routes/bank"));

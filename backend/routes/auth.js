@@ -3,6 +3,7 @@ const { sha256, sha224 } = require("js-sha256");
 const authRoutes = express.Router();
 const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
+module.exports = authRoutes;
 
 // gets the user based off of usernam and password
 async function get_user(username, password) {
