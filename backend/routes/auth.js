@@ -76,6 +76,9 @@ authRoutes.route("/register").post(async function (req, response) {
     userName: req.body.userName,
     role: req.body.role,
     salt: salt,
+    account1: 0.0,
+    account2: 0.0,
+    account3: 0.0,
   };
 
   let db_connect = dbo.getDb();
