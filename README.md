@@ -12,3 +12,7 @@ npm init -y
 npm install
 npm install mongodb express cors dotenv js-sha256 connect-mongo express-session
 
+
+object = objectStuff;
+
+
