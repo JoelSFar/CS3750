@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useNavigate } from "react-router";
 //import UsePop from "./components/usePopup";
 import Modal from './transferPop';
+import ModalTwo from './history';
 
 
 
@@ -10,6 +11,7 @@ const navigate = useNavigate();
 const [name, setName] = useState('');
 const [role, setRole] = useState('');
 const [open, setOpen] = useState(false);
+const [history, setHistory] = useState(false);
 const [action, setUse] = useState('');
 const [ammount, setAmmount] = useState('');
 const [account, setAccount] = useState('');
@@ -58,6 +60,11 @@ const handleUseChange = (event) => {
     setUse(event.target.value);
 };
 
+const handleHistory = async () =>
+{
+    setHistory(true);
+}
+
 const handleOpen = async () =>
 {
     setOpen(true);
@@ -91,10 +98,12 @@ return (
         <div className='input'>
             <button>Submit</button>
             <button onClick={() => setOpen(true)}>Transfer</button>
+            <button onClick={() => setHistory(true)}>History</button>
             <button onClick={handleclick}>Logout</button>
         </div>
     </div>
     <Modal open = {open} onClose={() => setOpen(false)} />
+    <ModalTwo open ={history} onClose={() => setHistory(false)} />
     </>
 )
 }

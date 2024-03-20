@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "./popUp.css";
 
 const Modal = ({open, onClose}) => {
-    if (!open) return null; 
+
 
     const [from, setFrom] = useState('');
     const [target, setTarget] = useState('');
     const [ammount, setAmmount] = useState('');
+    if (!open) return null; 
     const accountChange = async () =>
     {
         const change = await fetch('https://localhost:5001/transfer',
@@ -21,7 +22,6 @@ const Modal = ({open, onClose}) => {
         });
         const changeMade = await change.json();
     };
-
     const handleFromChange = (event) =>
     {
         setFrom(event.target.value);

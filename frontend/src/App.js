@@ -4,7 +4,6 @@ import Navbar from "./components/nav";
 import Login from "./components/login"
 import Register from "./components/register"
 import Home from "./components/home"
-import Use from "./components/usePopup"
 
 const App = () => {
 	return (
@@ -15,7 +14,6 @@ const App = () => {
 				<Route exact path="/" element={<Login />} />
 				<Route exact path="/home" element={<Home />} />
 				<Route exact path="/reg" element={<Register />} />
-				<Route exact path="/usePop" element={<Use />} />
 			</Routes>
 		</>
 	);
