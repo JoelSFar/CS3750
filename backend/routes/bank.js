@@ -105,7 +105,7 @@ bankRoutes.get("/deposit500", async (req, res) => {
     );
 
     if (!userRecord) {
-      res.json({ message: "user not found" });
+      return res.json({ message: "user not found" });
     }
 
     // found a record
@@ -131,6 +131,51 @@ bankRoutes.get("/deposit500", async (req, res) => {
       logTransaction(userRecord, transactionRecord);
     } else if (result.matchedCount === 0) {
       console.log("No document matches the provided query.");
+    }
+  } else {
+    // unable to log in through session
+    console.log("not logged int");
+    res.json({ message: "not logged in" });
+  }
+});
+
+// have not tested yet, but it is based on the get so it should be close
+bankRoutes.post("/deposit", async (req, res) => {
+  if (req.session.userName && req.session.passwordHash) {
+    const userRecord = await get_user_by_hash(
+      req.session.userName,
+      req.session.passwordHash
+    );
+
+    if (!userRecord) {
+      return res.json({ message: "user not found" });
+    }
+
+    const accountToUpdate = req.body.account; 
+    const amount = parseFloat(req.body.amount);
+
+    const update = {
+      $inc: {
+        [accountToUpdate]: amount,
+      },
+    };
+
+    const db_connect = dbo.getDb();
+    const result = await db_connect
+      .collection("users")
+      .updateOne({ _id: userRecord._id }, update);
+
+    if (result.modifiedCount === 1) {
+      console.log("The document was successfully updated.");
+      const transactionType = amount >= 0 ? "deposit" : "withdraw";
+      const transactionRecord = {
+        account: accountToUpdate,
+        type: transactionType,
+        amount: amount,
+      };
+      logTransaction(userRecord, transactionRecord);
+    } else {
+      res.json({ message: "Failed to update the account" });
     }
   } else {
     // unable to log in through session
