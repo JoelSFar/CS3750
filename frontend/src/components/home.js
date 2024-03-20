@@ -19,7 +19,7 @@ useEffect(() => {
         const data = await response.json();
         if (data) {
             const userInfoFetch = await fetch("http://localhost:5001/personalData", { method: 'GET', credentials: 'include'});
-            const userdata = await userInfoFetch.json();
+            const userdata = await userInfoFetch.text();
             console.log(userdata);
             setName(userdata.userName);
             setRole(userdata.role);
