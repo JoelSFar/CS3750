@@ -131,4 +131,6 @@ authRoutes.route("/logout").get(async function (req, res) {
     res.json(null);
 });
 
+
+
 module.exports = authRoutes;
