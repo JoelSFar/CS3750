@@ -1,0 +1,59 @@
+.modalBtn{
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    padding: 12px 24px;
+}
+
+.overLay{
+    background-color: rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.txt{
+    color: black;
+}
+
+
+.popUp
+{
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.popUpInner
+{
+    position: relative;
+    padding: 32px;
+    width: 100%;
+    max-width: 640px;
+    background-color: #fff;
+}
+
+.popUpInnerClose
+{
+    position:absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.input
+{
+    display: flex;
+    align-items: center;
+}
