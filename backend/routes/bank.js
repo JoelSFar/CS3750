@@ -152,9 +152,9 @@ bankRoutes.post("/deposit", async (req, res) => {
     }
 
     const accountToUpdate = req.body.account; 
-    const amount = parseFloat(req.body.amount);
+    const amount = parseFloat(req.body.amount); 
 
-    const update = {
+    const update = { 
       $inc: {
         [accountToUpdate]: amount,
       },
@@ -204,5 +204,7 @@ bankRoutes.get("/user", async (req, res) => {
     res.json({ message: "not logged in" });
   }
 });
+
+
 
 module.exports = bankRoutes;
