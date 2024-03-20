@@ -1,6 +1,8 @@
 const express = require("express");
 const bankRoutes = express.Router();
 const dbo = require("../db/conn");
+//                    checking,    savings,     yield
+const validAccounts = ['account1', 'account2', 'account3']; 
 
 // directly coppied from auth.js
 // gets user based on username and hash. used when auto logging in with session
@@ -116,9 +118,7 @@ bankRoutes.get("/deposit500", async (req, res) => {
     };
 
     const db_connect = dbo.getDb();
-    const result = await db_connect
-      .collection("users")
-      .updateOne(userRecord, update);
+    const result = await db_connect.collection("users").updateOne(userRecord, update);
 
     if (result.modifiedCount === 1) {
       console.log("The document was successfully updated.");
@@ -142,16 +142,25 @@ bankRoutes.get("/deposit500", async (req, res) => {
 // have not tested yet, but it is based on the get so it should be close, note from Joel use this 
 bankRoutes.post("/deposit", async (req, res) => {
   if (req.session.userName && req.session.passwordHash) {
+    
+    // get user
     const userRecord = await get_user_by_hash(
       req.session.userName,
       req.session.passwordHash
     );
 
+    // check if user exists
     if (!userRecord) {
       return res.json({ message: "user not found" });
     }
 
     const accountToUpdate = req.body.account; 
+
+    // Check if account is valid
+    if (!validAccounts.includes(accountToUpdate)) {
+      return res.json({ message: "not a valid account" }); // stop and return a response
+    }
+
     const amount = parseFloat(req.body.amount);
 
     const update = {
@@ -161,16 +170,13 @@ bankRoutes.post("/deposit", async (req, res) => {
     };
 
     const db_connect = dbo.getDb();
-    const result = await db_connect
-      .collection("users")
-      .updateOne({ _id: userRecord._id }, update);
+    const result = await db_connect.collection("users").updateOne({ _id: userRecord._id }, update);
 
     if (result.modifiedCount === 1) {
       console.log("The document was successfully updated.");
-      const transactionType = amount >= 0 ? "deposit" : "withdraw";
       const transactionRecord = {
         account: accountToUpdate,
-        type: transactionType,
+        type: "deposit",
         amount: amount,
       };
       logTransaction(userRecord, transactionRecord);
@@ -183,6 +189,63 @@ bankRoutes.post("/deposit", async (req, res) => {
     res.json({ message: "not logged in" });
   }
 });
+
+bankRoutes.post("/transfer", async (req, res) => {
+  if (req.session.userName && req.session.passwordHash) {
+    
+    // get user
+    const userRecord = await get_user_by_hash(
+      req.session.userName,
+      req.session.passwordHash
+    );
+
+    // check if user exists
+    if (!userRecord) {
+      return res.json({ message: "user not found" });
+    }
+
+    const fromAccount = req.body.from; 
+    const toAccount = req.body.target; 
+
+    // Check if account is valid
+    if (!validAccounts.includes(fromAccount)) {
+      return res.json({ message: "not a valid account" }); // stop and return a response
+    }
+    if (!validAccounts.includes(toAccount)) {
+      return res.json({ message: "not a valid account" }); // stop and return a response
+    }
+
+    const amount = parseFloat(req.body.amount);
+
+    const update = {
+      $inc: {
+        [fromAccount]: -amount,
+        [toAccount]: amount,
+      },
+    };
+
+    const db_connect = dbo.getDb();
+    const result = await db_connect.collection("users").updateOne({ _id: userRecord._id }, update);
+
+    if (result.modifiedCount === 1) {
+      console.log("The document was successfully updated.");
+      const transactionRecord = {
+        fromAccount: fromAccount,
+        toAccount: toAccount,
+        type: "transfer",
+        amount: amount,
+      };
+      logTransaction(userRecord, transactionRecord);
+    } else {
+      res.json({ message: "Failed to update the account" });
+    }
+  } else {
+    // unable to log in through session
+    console.log("not logged int");
+    res.json({ message: "not logged in" });
+  }
+});
+
 
 // helper function for josh. I use it to go to localhost5000/user, to see my changes in the browser.
 bankRoutes.get("/user", async (req, res) => {
