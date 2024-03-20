@@ -139,7 +139,7 @@ bankRoutes.get("/deposit500", async (req, res) => {
   }
 });
 
-// have not tested yet, but it is based on the get so it should be close
+// have not tested yet, but it is based on the get so it should be close, note from Joel use this 
 bankRoutes.post("/deposit", async (req, res) => {
   if (req.session.userName && req.session.passwordHash) {
     const userRecord = await get_user_by_hash(
