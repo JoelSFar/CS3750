@@ -10,7 +10,9 @@ const navigate = useNavigate();
 const [name, setName] = useState('');
 const [role, setRole] = useState('');
 const [open, setOpen] = useState(false);
-const [use, setUse] = useState('');
+const [action, setUse] = useState('');
+const [ammount, setAmmount] = useState('');
+const [account, setAccount] = useState('');
 
 
 useEffect(() => {
@@ -31,6 +33,27 @@ useEffect(() => {
 }, []);
 
 
+const accountChange = async () =>
+{
+    const change = await fetch('https://localhost:5001/deposit',
+    {
+        credentials: "include",
+        method: "POST",
+        body: JSON.stringify({action: action, ammount: ammount, account: account}),
+        headers:
+        {
+            'Content-Type': 'application/json'
+        },
+    });
+    const changeMade = await change.json();
+};
+
+
+const handleAccountChange = (event) =>
+{
+    setAccount(event.target.value);
+};
+
 const handleUseChange = (event) => {
     setUse(event.target.value);
 };
@@ -50,17 +73,20 @@ const handleclick = async (event) => {
 return (
     <>
     <h1>YOU LOGGED IN</h1>
-    <button>Checking</button>
-    <button>Savings</button>
-    <button>High Yield</button>
+    <input type="radio" id="checking" name="fav_language" value="checking" onChange={handleAccountChange} />
+        <label htmlFor="checking">Checking</label>
+        <input type="radio" id="savings" name="fav_language" value="savings" onChange={handleAccountChange} />
+        <label htmlFor="savings">Savings</label>
+        <input type="radio" id="yield" name="fav_language" value="yield" onChange={handleAccountChange} />
+        <label htmlFor="yield">High Yield</label>
     <div>
-        <input type="radio" id="customer" name="fav_language" value="withdrawl" onChange={handleUseChange} />
+        <input type="radio" id="customer" name="fav_language" value="w" onChange={handleUseChange} />
         <label htmlFor="customer">Withdrawl</label>
-        <input type="radio" id="admin" name="fav_language" value="deposit" onChange={handleUseChange} />
+        <input type="radio" id="admin" name="fav_language" value="d" onChange={handleUseChange} />
         <label htmlFor="admin">Deposit</label>
         <div className='input'>
             <h2>Input amount: </h2>
-            <input type='text'></input>
+            <input type='text' value={ammount} onChange={(event) => setAmmount(event.target.value)}></input>
         </div>
         <div className='input'>
             <button>Submit</button>
@@ -69,9 +95,6 @@ return (
         </div>
     </div>
     <Modal open = {open} onClose={() => setOpen(false)} />
-
-
-
     </>
 )
 }

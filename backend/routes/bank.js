@@ -50,7 +50,7 @@ async function logTransaction(userRecord, transaction) {
   }
 }
 
-// gets the account information
+// gets the account information, Note from Joel use this
 bankRoutes.get("/accounts", async (req, res) => {
   if (req.session.userName && req.session.passwordHash) {
     const userRecord = await get_user_by_hash(
@@ -74,7 +74,7 @@ bankRoutes.get("/accounts", async (req, res) => {
   }
 });
 
-// returns the users entire history
+// returns the users entire history, Note from Joel use this
 bankRoutes.get("/history", async (req, res) => {
   if (req.session.userName && req.session.passwordHash) {
     const userRecord = await get_user_by_hash(
