@@ -24,7 +24,7 @@ module.exports = {
   },
 
   getDb: ()=>{
-    return client.db("authentication");
+    return client.db("BankDB");
   }
 
 }
