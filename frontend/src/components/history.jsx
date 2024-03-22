@@ -21,7 +21,17 @@ const ModalTwo = ({open, onClose}) => {
         });
         let data = await response.json();
         console.log(data.history);
-        
+
+    };
+
+    const handleShowEntireHistory = async () => {
+        const response = await fetch("http://localhost:5001/history", {
+        credentials: "include",
+        method: "GET",
+        });
+        let data = await response.json();
+        console.log(data.history);
+
     };
 
     // const accountChange = async () =>
@@ -46,7 +56,8 @@ const ModalTwo = ({open, onClose}) => {
                     <p onClick={onClose} className="txt">X</p>
                     <br></br>
                     <h1>History</h1>
-                    <button onClick={handleShowHistory}>Show History</button>
+                    <button onClick={handleShowHistory}>Show History for Individual Account</button>
+                    <button onClick={handleShowEntireHistory}>Show History for Individual Account</button>
                 </div>
             </div>
     );
