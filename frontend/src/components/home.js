@@ -80,16 +80,16 @@ const handleclick = async (event) => {
 return (
     <>
     <h1>YOU LOGGED IN</h1>
-    <input type="radio" id="checking" name="fav_language" value="checking" onChange={handleAccountChange} />
+    <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleAccountChange} />
         <label htmlFor="checking">Checking</label>
-        <input type="radio" id="savings" name="fav_language" value="savings" onChange={handleAccountChange} />
+        <input type="radio" id="savings" name="selected_account" value="savings" onChange={handleAccountChange} />
         <label htmlFor="savings">Savings</label>
-        <input type="radio" id="yield" name="fav_language" value="yield" onChange={handleAccountChange} />
+        <input type="radio" id="yield" name="selected_account" value="yield" onChange={handleAccountChange} />
         <label htmlFor="yield">High Yield</label>
     <div>
-        <input type="radio" id="customer" name="fav_language" value="w" onChange={handleUseChange} />
+        <input type="radio" id="customer" name="withdraw_deposit" value="w" onChange={handleUseChange} />
         <label htmlFor="customer">Withdrawl</label>
-        <input type="radio" id="admin" name="fav_language" value="d" onChange={handleUseChange} />
+        <input type="radio" id="admin" name="withdraw_deposit" value="d" onChange={handleUseChange} />
         <label htmlFor="admin">Deposit</label>
         <div className='input'>
             <h2>Input amount: </h2>
