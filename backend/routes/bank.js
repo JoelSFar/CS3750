@@ -94,22 +94,18 @@ bankRoutes.get("/history/:accountType", async (req, res) => {
         //userLogs = JSON.parse(userLogs);
         //userLogs = JSON.parse(userLogs);
         //var entries = Object.entries(userLogs);
-        console.log(userLogs[0].account);
+        console.log(userLogs);
         console.log(req.params.accountType);
         let accountLogs = new Array();
 
         for (var item in userLogs) {
           if (userLogs.hasOwnProperty(item)){
-            accountLogs.push(userLogs[item]);
+            if (userLogs[item].account == req.params.accountType){
+              accountLogs.push(userLogs[item]);
+            }
           }
         }
         console.log(accountLogs);
-    
-        function getAccountLogs(log){
-          if (log.account === req.params.accountType) {
-            accountLogs.push(log);
-            }
-        }
 
     // user found
     res.json({
