@@ -190,6 +190,57 @@ bankRoutes.post("/deposit", async (req, res) => {
   }
 });
 
+bankRoutes.post("/withdraw", async (req, res) => {
+  if (req.session.userName && req.session.passwordHash) {
+    
+    // get user
+    const userRecord = await get_user_by_hash(
+      req.session.userName,
+      req.session.passwordHash
+    );
+
+    // check if user exists
+    if (!userRecord) {
+      return res.json({ message: "user not found" });
+    }
+
+    const accountToUpdate = req.body.account; 
+
+    // Check if account is valid
+    if (!validAccounts.includes(accountToUpdate)) {
+      return res.json({ message: "not a valid account" }); // stop and return a response
+    }
+
+    const amount = parseFloat(req.body.amount);
+
+    const update = {
+      $inc: {
+        [accountToUpdate]: -amount,
+      },
+    };
+
+    const db_connect = dbo.getDb();
+    const result = await db_connect.collection("users").updateOne({ _id: userRecord._id }, update);
+
+    if (result.modifiedCount === 1) {
+      console.log("The document was successfully updated.");
+      const transactionRecord = {
+        account: accountToUpdate,
+        type: "withdraw",
+        amount: amount,
+      };
+      logTransaction(userRecord, transactionRecord);
+    } else {
+      res.json({ message: "Failed to update the account" });
+    }
+  } else {
+    // unable to log in through session
+    console.log("not logged int");
+    res.json({ message: "not logged in" });
+  }
+});
+
+
 bankRoutes.post("/transfer", async (req, res) => {
   if (req.session.userName && req.session.passwordHash) {
     
