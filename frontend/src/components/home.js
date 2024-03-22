@@ -35,8 +35,8 @@ const [accountInfo, setAccountInfo] = useState({});
 const [open, setOpen] = useState(false);
 const [historyViewable, setHistoryViewable] = useState(false);
 const [action, setUse] = useState('');
-const [ammount, setAmmount] = useState('');
-const [account, setAccount] = useState('');
+const [amount, setAmount] = useState('');
+const [selectedAccount, setSelectedAccount] = useState('');
 
 
 useEffect(() => {
@@ -70,25 +70,51 @@ useEffect(() => {
 }, []);
 
 
-const accountChange = async () =>
-{
-    const change = await fetch('https://localhost:5001/deposit',
-    {
-        credentials: "include",
-        method: "POST",
-        body: JSON.stringify({action: action, ammount: ammount, account: account}),
-        headers:
-        {
-            'Content-Type': 'application/json'
-        },
-    });
-    const changeMade = await change.json();
-};
+const handleWithdrawDeposit = async () => {
+    if (!amount) {
+        return;
+    }
 
+    const parsedAmount = Math.abs(parseFloat(amount));
+    // check if parsing failed
+    if (isNaN(parsedAmount)) {
+        return;
+    }
+
+    if (action === 'w') {
+        const response = await fetch("http://localhost:5001/withdraw", {
+            credentials: "include",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({action: action, amount: parsedAmount, account: selectedAccount}),
+        })
+        .catch(error => {
+            window.alert(error);
+        });
+        console.log(`Withdraw ${parsedAmount} from ${selectedAccount}`);
+        
+    } else if (action === 'd') {
+        const response = await fetch("http://localhost:5001/deposit", {
+            credentials: "include",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({action: action, amount: parsedAmount, account: selectedAccount}),
+        })
+        .catch(error => {
+            window.alert(error);
+        });
+        console.log(`Deposit ${parsedAmount} to ${selectedAccount}`);
+    }
+    
+};
 
 const handleAccountChange = (event) =>
 {
-    setAccount(event.target.value);
+    setSelectedAccount(event.target.value);
 };
 
 const handleUseChange = (event) => {
@@ -127,16 +153,16 @@ return (
         <input type="radio" id="yield" name="selected_account" value="yield" onChange={handleAccountChange} />
         <label htmlFor="yield">High Yield</label>
     <div>
-        <input type="radio" id="customer" name="withdraw_deposit" value="w" onChange={handleUseChange} />
-        <label htmlFor="customer">Withdrawl</label>
-        <input type="radio" id="admin" name="withdraw_deposit" value="d" onChange={handleUseChange} />
-        <label htmlFor="admin">Deposit</label>
+        <input type="radio" id="withdraw" name="withdraw_deposit" value="w" onChange={handleUseChange} />
+        <label htmlFor="withdraw">Withdraw</label>
+        <input type="radio" id="deposit" name="withdraw_deposit" value="d" onChange={handleUseChange} />
+        <label htmlFor="deposit">Deposit</label>
         <div className='input'>
             <h2>Input amount: </h2>
-            <input type='text' value={ammount} onChange={(event) => setAmmount(event.target.value)}></input>
+            <input type='number' value={amount} onChange={(event) => setAmount(event.target.value)}></input>
         </div>
         <div className='input'>
-            <button>Submit</button>
+            <button onClick={handleWithdrawDeposit}>Submit</button>
             <button onClick={() => setOpen(true)}>Transfer</button>
             <button onClick={() => setHistoryViewable(true)}>History</button>
             <button onClick={handleclick}>Logout</button>
