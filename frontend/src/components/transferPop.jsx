@@ -6,15 +6,16 @@ const Modal = ({open, onClose}) => {
 
     const [from, setFrom] = useState('');
     const [target, setTarget] = useState('');
-    const [ammount, setAmmount] = useState('');
+    const [amount, setAmmount] = useState('');
     if (!open) return null; 
     const accountChange = async () =>
     {
-        const change = await fetch('https://localhost:5001/transfer',
+        console.log(from + " "+ target + " "+ amount)
+        const change = await fetch('http://localhost:5001/transfer',
         {
             credentials: "include",
             method: "POST",
-            body: JSON.stringify({from: from, target: target, ammount: ammount}),
+            body: JSON.stringify({from: from, target: target, amount: amount}),
             headers:
             {
                 'Content-Type': 'application/json'
@@ -39,29 +40,29 @@ const Modal = ({open, onClose}) => {
                     <br></br>
                     <div className="input">
                         <h2>Transfer From: </h2>
-                        <input type="radio" id="customer" name="fav_language" value="withdrawl" onChange={handleFromChange}/>
+                        <input type="radio" id="customer" name="from" value="checking" onChange={handleFromChange}/>
                         <label htmlFor="customer" className="txt">Checking</label>
-                        <input type="radio" id="employee" name="fav_language" value="store" onChange={handleFromChange}/>
+                        <input type="radio" id="employee" name="from" value="savings" onChange={handleFromChange}/>
                         <label htmlFor="employee" className="txt">Savings</label>
-                        <input type="radio" id="admin" name="fav_language" value="deposit" onChange={handleFromChange}/>
+                        <input type="radio" id="admin" name="from" value="yield" onChange={handleFromChange}/>
                         <label htmlFor="admin" className="txt">High Yield</label>
                     </div>
                     
                     <div className="input">
                         <h2>Transfer To: </h2>
-                        <input type="radio" id="customer" name="fav_language" value="withdrawl" onChange={handleTargetChange}/>
+                        <input type="radio" id="test" name="target" value="checking" onChange={handleTargetChange}/>
                         <label htmlFor="customer" className="txt">Checking</label>
-                        <input type="radio" id="employee" name="fav_language" value="store" onChange={handleTargetChange}/>
+                        <input type="radio" id="testOne" name="target" value="savings" onChange={handleTargetChange}/>
                         <label htmlFor="employee" className="txt">Savings</label>
-                        <input type="radio" id="admin" name="fav_language" value="deposit" onChange={handleTargetChange}/>
+                        <input type="radio" id="testTwo" name="target" value="yield" onChange={handleTargetChange}/>
                         <label htmlFor="admin" className="txt">High Yield</label>
                     </div>
                   
                     <div className='input'>
                         <h2 className="txt">Input amount: </h2>
-                        <input type='text' value={ammount} onChange={(event) => setAmmount(event.target.value)}></input>
+                        <input type='text' value={amount} onChange={(event) => setAmmount(event.target.value)}></input>
                     </div>
-                    <button type="submit">Submit</button>
+                    <button type="submit" onClick={accountChange}>Submit</button>
                 </div>
             </div>
     );
