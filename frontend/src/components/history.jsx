@@ -12,10 +12,21 @@ function Record(data){
 
 const ModalTwo = ({open, onClose}) => {
 
+    const [form, setForm] = useState({
+        account: "",
+        type: "",
+        amount: "",
+        description: "",
+      });
+
+      const { account, type, amount, description } = form;
+
+      const newAccount = { ... form };
+
     if (!open) return null; 
 
     const handleShowHistory = async () => {
-        const response = await fetch("http://localhost:5001/history/:accountType", {
+        const response = await fetch("http://localhost:5001/history/${newAccount.type}", {
         credentials: "include",
         method: "GET",
         });
