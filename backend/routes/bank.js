@@ -2,7 +2,7 @@ const express = require("express");
 const bankRoutes = express.Router();
 const dbo = require("../db/conn");
 //                    checking,    savings,     yield
-const validAccounts = ['account1', 'account2', 'account3']; 
+const validAccounts = ['checking', 'savings', 'yield']; 
 
 // directly coppied from auth.js
 // gets user based on username and hash. used when auto logging in with session
@@ -98,46 +98,6 @@ bankRoutes.get("/history", async (req, res) => {
   }
 });
 
-// used to test, deposits 500 into account1
-bankRoutes.get("/deposit500", async (req, res) => {
-  if (req.session.userName && req.session.passwordHash) {
-    const userRecord = await get_user_by_hash(
-      req.session.userName,
-      req.session.passwordHash
-    );
-
-    if (!userRecord) {
-      return res.json({ message: "user not found" });
-    }
-
-    // found a record
-    const update = {
-      $inc: {
-        account1: 500.02,
-      },
-    };
-
-    const db_connect = dbo.getDb();
-    const result = await db_connect.collection("users").updateOne(userRecord, update);
-
-    if (result.modifiedCount === 1) {
-      console.log("The document was successfully updated.");
-
-      let transactionRecord = {
-        account: "account1",
-        type: "deposit",
-        amount: 500.02,
-      };
-      logTransaction(userRecord, transactionRecord);
-    } else if (result.matchedCount === 0) {
-      console.log("No document matches the provided query.");
-    }
-  } else {
-    // unable to log in through session
-    console.log("not logged int");
-    res.json({ message: "not logged in" });
-  }
-});
 
 // have not tested yet, but it is based on the get so it should be close, note from Joel use this 
 bankRoutes.post("/deposit", async (req, res) => {
