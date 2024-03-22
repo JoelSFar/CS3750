@@ -38,7 +38,7 @@ const [historyViewable, setHistoryViewable] = useState(false);
 const [action, setUse] = useState('');
 const [amount, setAmount] = useState('');
 const [selectedAccount, setSelectedAccount] = useState('');
-let data; 
+
 
 useEffect(() => {
     const fetchData = async () => {
@@ -108,7 +108,6 @@ const handleWithdrawDeposit = async () => {
         .catch(error => {
             window.alert(error);
         });
-        let data = response.json();
         console.log(`Deposit ${parsedAmount} to ${selectedAccount}`);
     }
 
