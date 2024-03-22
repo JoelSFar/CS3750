@@ -68,7 +68,7 @@ useEffect(() => {
 
     };
     fetchData();
-}, reload);
+}, []);
 
 
 const handleWithdrawDeposit = async () => {
@@ -110,8 +110,6 @@ const handleWithdrawDeposit = async () => {
         });
         console.log(`Deposit ${parsedAmount} to ${selectedAccount}`);
     }
-
-    setReload(reload + 1);    
 };
 
 const handleAccountChange = (event) =>
