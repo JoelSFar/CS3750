@@ -5,13 +5,35 @@ import Modal from './transferPop';
 import ModalTwo from './history';
 
 
+function AccountInfo({ name, balance }) {
+    return (
+        <div className='AccountInfo'>
+            <h2>{name}</h2>
+            <p>Balance: {balance}</p>
+        </div>
+    );
+}
+
+function AccountsList({ accounts }) {
+    console.log("in accountslist: ", accounts);
+
+    return (
+        <div>
+            {accounts.map((account, index) => (
+                <AccountInfo key={index} name={account.name} balance={account.balance? account.balance: "0"} />
+            ))}
+        </div>
+    );
+}
+
+
 
 export default function Home() {
 const navigate = useNavigate();
-const [name, setName] = useState('');
-const [role, setRole] = useState('');
+const [loading, setLoading] = useState(true);
+const [accountInfo, setAccountInfo] = useState({});
 const [open, setOpen] = useState(false);
-const [history, setHistory] = useState(false);
+const [historyViewable, setHistoryViewable] = useState(false);
 const [action, setUse] = useState('');
 const [ammount, setAmmount] = useState('');
 const [account, setAccount] = useState('');
@@ -19,17 +41,30 @@ const [account, setAccount] = useState('');
 
 useEffect(() => {
     const fetchData = async () => {
-        const response = await fetch("http://localhost:5001/prev", { method: 'GET', credentials: 'include'});
-        const data = await response.json();
-        if (data) {
-            const userInfoFetch = await fetch("http://localhost:5001/personalData", { method: 'GET', credentials: 'include'});
-            const userdata = await userInfoFetch.text();
-            console.log(userdata);
-            setName(userdata.userName);
-            setRole(userdata.role);
-        } else {
-            console.log("no session");
+
+        try {
+            console.log("in home use effect");
+            const response = await fetch("http://localhost:5001/prev", { method: 'GET', credentials: 'include'});
+            const data = await response.json();
+            if (data) {
+                const userInfoFetch = await fetch("http://localhost:5001/accounts", { method: 'GET', credentials: 'include'});
+                const userdata = await userInfoFetch.json();
+                console.log("got user account data:", userdata);
+                setAccountInfo(userdata.accounts);
+                console.log("user data:", accountInfo);
+
+            } else {
+                console.log("no session");
+                navigate("/");
+            }
+        } catch (error) {
+            console.error('Failed in use effect:', error);
+            
+        } finally {
+            setLoading(false);
         }
+
+
     };
     fetchData();
 }, []);
@@ -62,7 +97,7 @@ const handleUseChange = (event) => {
 
 const handleHistory = async () =>
 {
-    setHistory(true);
+    setHistoryViewable(true);
 }
 
 const handleOpen = async () =>
@@ -77,9 +112,14 @@ const handleclick = async (event) => {
     navigate("/");
 }
 
+if (loading) {
+    return <div>Loading...</div>;
+}
+
 return (
     <>
     <h1>YOU LOGGED IN</h1>
+    <AccountsList accounts={accountInfo}/>
     <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleAccountChange} />
         <label htmlFor="checking">Checking</label>
         <input type="radio" id="savings" name="selected_account" value="savings" onChange={handleAccountChange} />
@@ -98,12 +138,12 @@ return (
         <div className='input'>
             <button>Submit</button>
             <button onClick={() => setOpen(true)}>Transfer</button>
-            <button onClick={() => setHistory(true)}>History</button>
+            <button onClick={() => setHistoryViewable(true)}>History</button>
             <button onClick={handleclick}>Logout</button>
         </div>
-    </div>
+            </div>
     <Modal open = {open} onClose={() => setOpen(false)} />
-    <ModalTwo open ={history} onClose={() => setHistory(false)} />
+    <ModalTwo open ={historyViewable} onClose={() => setHistoryViewable(false)} />
     </>
 )
 }

@@ -66,10 +66,12 @@ bankRoutes.get("/accounts", async (req, res) => {
 
     // user found
     res.json({
-      account1: userRecord.account1,
-      account2: userRecord.account2,
-      account3: userRecord.account3,
+      accounts: validAccounts.map(accountName => ({
+        name: accountName,
+        balance: userRecord[accountName]
+      })),
     });
+
   } else {
     console.log("not logged int");
     res.json({ message: "not logged in" });

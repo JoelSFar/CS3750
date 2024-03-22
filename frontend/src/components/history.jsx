@@ -1,38 +1,35 @@
 import React, { useState } from "react";
 import "./popUp.css";
 
+
+function Record(data){
+    
+    return (
+        <>
+        </>
+    )
+}
+
 const ModalTwo = ({open, onClose}) => {
 
-
-    const [from, setFrom] = useState('');
-    const [target, setTarget] = useState('');
-    const [ammount, setAmmount] = useState('');
     if (!open) return null; 
-    /*
-    const accountChange = async () =>
-    {
-        const change = await fetch('https://localhost:5001/transfer',
-        {
-            credentials: "include",
-            method: "POST",
-            body: JSON.stringify({from: from, target: target, ammount: ammount}),
-            headers:
-            {
-                'Content-Type': 'application/json'
-            },
-        });
-        const changeMade = await change.json();
-    };
-    */
-    const handleFromChange = (event) =>
-    {
-        setFrom(event.target.value);
-    };
 
-    const handleTargetChange = (event) =>
-    {
-        setTarget(event.target.value);
-    };
+
+    // const accountChange = async () =>
+    // {
+    //     const change = await fetch('https://localhost:5001/transfer',
+    //     {
+    //         credentials: "include",
+    //         method: "POST",
+    //         body: JSON.stringify({from: from, target: target, ammount: ammount}),
+    //         headers:
+    //         {
+    //             'Content-Type': 'application/json'
+    //         },
+    //     });
+    //     const changeMade = await change.json();
+    // };
+
 
     return(
             <div className="popUp">
@@ -44,4 +41,5 @@ const ModalTwo = ({open, onClose}) => {
             </div>
     );
 };
+
 export default ModalTwo; 
