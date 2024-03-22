@@ -31,6 +31,7 @@ function AccountsList({ accounts }) {
 export default function Home() {
 const navigate = useNavigate();
 const [loading, setLoading] = useState(true);
+const [reload, setReload] = useState(0);
 const [accountInfo, setAccountInfo] = useState({});
 const [open, setOpen] = useState(false);
 const [historyViewable, setHistoryViewable] = useState(false);
@@ -67,7 +68,7 @@ useEffect(() => {
 
     };
     fetchData();
-}, [data]);
+}, reload);
 
 
 const handleWithdrawDeposit = async () => {
@@ -110,7 +111,8 @@ const handleWithdrawDeposit = async () => {
         let data = response.json();
         console.log(`Deposit ${parsedAmount} to ${selectedAccount}`);
     }
-    
+
+    setReload(reload + 1);    
 };
 
 const handleAccountChange = (event) =>
