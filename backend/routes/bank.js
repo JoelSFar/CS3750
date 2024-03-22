@@ -76,8 +76,8 @@ bankRoutes.get("/accounts", async (req, res) => {
   }
 });
 
-// returns the users entire history, Note from Joel use this
-bankRoutes.get("/history", async (req, res) => {
+// returns the users entire history
+bankRoutes.get("/history/:accountType", async (req, res) => {
   if (req.session.userName && req.session.passwordHash) {
     const userRecord = await get_user_by_hash(
       req.session.userName,
@@ -87,10 +87,20 @@ bankRoutes.get("/history", async (req, res) => {
     if (!userRecord) {
       res.json({ message: "user not found" });
     }
+        //Grab all user's logs (should be an array of json objects)
+        const userLogs = userRecord.Logs;
+        let accountLogs = new Array();
+        userLogs.foreach(getAccountLogs);
+    
+        function getAccountLogs(log){
+          if (log.MainAccount === req.params.accountType) {
+            accountLogs.push(log);
+            }
+        }
 
     // user found
     res.json({
-      history: userRecord.history,
+      history: accountLogs,
     });
   } else {
     console.log("not logged int");
