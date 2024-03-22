@@ -67,7 +67,7 @@ const ModalTwo = ({open, onClose}) => {
                     <p onClick={onClose} className="txt">X</p>
                     <br></br>
                     <h1>History</h1>
-                    <button onClick={handleShowHistory}>Show History for Individual Account</button>
+                    <button onClick={handleShowHistory}>Show History for Checking Account</button>
                     <button onClick={handleShowEntireHistory}>Show History for Entire Account</button>
                 </div>
             </div>
