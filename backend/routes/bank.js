@@ -115,15 +115,9 @@ bankRoutes.post("/deposit", async (req, res) => {
     }
 
     const accountToUpdate = req.body.account; 
-
-    // Check if account is valid
-    if (!validAccounts.includes(accountToUpdate)) {
-      return res.json({ message: "not a valid account" }); // stop and return a response
-    }
-
     const amount = parseFloat(req.body.amount);
 
-    const update = {
+    const update = { 
       $inc: {
         [accountToUpdate]: amount,
       },
@@ -278,5 +272,7 @@ bankRoutes.get("/user", async (req, res) => {
     res.json({ message: "not logged in" });
   }
 });
+
+
 
 module.exports = bankRoutes;
