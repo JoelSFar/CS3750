@@ -90,12 +90,16 @@ bankRoutes.get("/history/:accountType", async (req, res) => {
       res.json({ message: "user not found" });
     }
         //Grab all user's logs (should be an array of json objects)
-        const userLogs = userRecord.Logs;
+        const userLogs = userRecord.history;
+        console.log(userLogs);
+        console.log(req.params.accountType);
         let accountLogs = new Array();
-        userLogs.foreach(getAccountLogs);
+        for (i = 0; i < 9; i++) {
+          console.log(userLogs[i]);
+        }
     
         function getAccountLogs(log){
-          if (log.MainAccount === req.params.accountType) {
+          if (log.account === req.params.accountType) {
             accountLogs.push(log);
             }
         }
