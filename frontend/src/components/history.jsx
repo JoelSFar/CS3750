@@ -1,21 +1,13 @@
 import React, { useState } from "react";
 import "./popUp.css";
 
-
-function Record(data){
-    
-    return (
-        <>
-        </>
-    )
-}
-
 const ModalTwo = ({open, onClose}) => {
+    const [selectedAccount, setSelectedAccount] = useState('');
 
     if (!open) return null; 
 
     const handleShowHistory = async () => {
-        const response = await fetch("http://localhost:5001/history/:accountType", {
+        const response = await fetch("http://localhost:5001/history/${selectedAccount.type}", {
         credentials: "include",
         method: "GET",
         });
@@ -34,21 +26,10 @@ const ModalTwo = ({open, onClose}) => {
 
     };
 
-    // const accountChange = async () =>
-    // {
-    //     const change = await fetch('https://localhost:5001/transfer',
-    //     {
-    //         credentials: "include",
-    //         method: "POST",
-    //         body: JSON.stringify({from: from, target: target, ammount: ammount}),
-    //         headers:
-    //         {
-    //             'Content-Type': 'application/json'
-    //         },
-    //     });
-    //     const changeMade = await change.json();
-    // };
-
+    const handleAccountChange = (event) =>
+    {
+    setSelectedAccount(event.target.value);
+    };
 
     return(
             <div className="popUp">
@@ -56,8 +37,14 @@ const ModalTwo = ({open, onClose}) => {
                     <p onClick={onClose} className="txt">X</p>
                     <br></br>
                     <h1>History</h1>
-                    <button onClick={handleShowHistory}>Show History for Individual Account</button>
-                    <button onClick={handleShowEntireHistory}>Show History for Individual Account</button>
+                    <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleAccountChange} />
+                    <label htmlFor="checking">Checking</label>
+                    <input type="radio" id="savings" name="selected_account" value="savings" onChange={handleAccountChange} />
+                    <label htmlFor="savings">Savings</label>
+                    <input type="radio" id="yield" name="selected_account" value="yield" onChange={handleAccountChange} />
+                    <label htmlFor="yield">High Yield</label>
+                    <button onClick={handleShowHistory}>Show History for Specific Account</button>
+                    <button onClick={handleShowEntireHistory}>Show History for Entire Account</button>
                 </div>
             </div>
     );
