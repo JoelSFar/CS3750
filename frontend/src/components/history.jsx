@@ -6,8 +6,13 @@ const ModalTwo = ({open, onClose}) => {
 
     if (!open) return null; 
 
+    const handleAccountChange = (event) =>
+    {
+        setSelectedAccount(event.target.value);
+    };
+
     const handleShowHistory = async () => {
-        const response = await fetch("http://localhost:5001/history/${selectedAccount.type}", {
+        const response = await fetch("http://localhost:5001/history/${selectedAccount}", {
         credentials: "include",
         method: "GET",
         });
@@ -24,11 +29,6 @@ const ModalTwo = ({open, onClose}) => {
         let data = await response.json();
         console.log(data.history);
 
-    };
-
-    const handleAccountChange = (event) =>
-    {
-    setSelectedAccount(event.target.value);
     };
 
     return(
