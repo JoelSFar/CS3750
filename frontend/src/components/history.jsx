@@ -12,7 +12,7 @@ const ModalTwo = ({open, onClose}) => {
     };
 
     const handleShowHistory = async () => {
-        const response = await fetch("http://localhost:5001/history/${selectedAccount}", {
+        const response = await fetch(`http://localhost:5001/history/${selectedAccount}`, {
         credentials: "include",
         method: "GET",
         });
