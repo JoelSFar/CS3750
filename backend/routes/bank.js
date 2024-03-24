@@ -94,6 +94,7 @@ bankRoutes.get("/history/:accountType", async (req, res) => {
         //userLogs = JSON.parse(userLogs);
         //userLogs = JSON.parse(userLogs);
         //var entries = Object.entries(userLogs);
+        // change
         console.log(userLogs);
         console.log(req.params.accountType);
         let accountLogs = new Array();
