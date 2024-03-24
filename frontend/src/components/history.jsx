@@ -18,10 +18,10 @@ const ModalTwo = ({open, onClose}) => {
         });
         let data = await response.json();
         console.log(data.history);
-
+        setSelectedAccount(data.history);
     };
 
-    
+
     const handleShowEntireHistory = async () => {
         const response = await fetch("http://localhost:5001/history", {
         credentials: "include",
@@ -29,6 +29,7 @@ const ModalTwo = ({open, onClose}) => {
         });
         let data = await response.json();
         console.log(data.history);
+        setSelectedAccount(data.history);
 
     };
 
@@ -46,6 +47,7 @@ const ModalTwo = ({open, onClose}) => {
                     <label htmlFor="yield">High Yield</label>
                     <button onClick={handleShowHistory}>Show History for Specific Account</button>
                     <button onClick={handleShowEntireHistory}>Show History for Entire Account</button>
+                    <h3>{selectedAccount}</h3>
                 </div>
             </div>
     );
