@@ -128,7 +128,7 @@ bankRoutes.get("/history", async (req, res) => {
       res.json({ message: "user not found" });
     }
         //Grab all user's logs (should be an array of json objects)
-        const userLogs = userRecord.Logs;
+        const userLogs = userRecord.History;
 
     // user found
     res.json({
