@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import "./popUp.css";
 
+const History = (props) => (
+    <tr>
+      <td>{props.history.account}</td>
+    </tr>
+   );
+
 const ModalTwo = ({open, onClose}) => {
     const [selectedAccount, setSelectedAccount] = useState('');
 
@@ -17,8 +23,18 @@ const ModalTwo = ({open, onClose}) => {
         method: "GET",
         });
         let data = await response.json();
-        console.log(data.history);
-        setSelectedAccount(data.history);
+        let history = data.history;
+        setSelectedAccount(history);
+        document.getElementById('history').innerHTML = history.map(record => 
+            `<div>
+              <div>Account Name: ${record.account}</div>
+              <div>Transaction Date: ${record.date}</div>
+              <div>Transaction Type: ${record.type}</div>
+              <div>Transaction Amount: ${record.amount}</div> 
+              <div>Transaction Description: ${record.description}</div>
+              <br><br>
+            </div>`
+        ).join('');
     };
 
 
@@ -28,17 +44,21 @@ const ModalTwo = ({open, onClose}) => {
         method: "GET",
         });
         let data = await response.json();
+        console.log(data);
         let history = data.history;
-        let historyArray = new Array();
-        for (var item in history) {
-            if (history.hasOwnProperty(item)){
-                historyArray.push(history[item]);
-            }
-        }
-        console.log(historyArray);
-        setSelectedAccount(data.history);
+        setSelectedAccount(history);
+        document.getElementById('history').innerHTML = history.map(record => 
+            `<div>
+              <div>Account Name: ${record.account}</div>
+              <div>Transaction Date: ${record.date}</div>
+              <div>Transaction Type: ${record.type}</div>
+              <div>Transaction Amount: ${record.amount}</div> 
+              <div>Transaction Description: ${record.description}</div>
+              <br><br>
+            </div>`
+        ).join('');
+        };
 
-    };
 
     return(
             <div className="popUp">
@@ -54,7 +74,7 @@ const ModalTwo = ({open, onClose}) => {
                     <label htmlFor="yield">High Yield</label>
                     <button onClick={handleShowHistory}>Show History for Specific Account</button>
                     <button onClick={handleShowEntireHistory}>Show History for Entire Account</button>
-                    <h3>{selectedAccount}</h3>
+                    <h3 id="history"></h3>
                 </div>
             </div>
     );
