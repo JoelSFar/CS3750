@@ -28,7 +28,14 @@ const ModalTwo = ({open, onClose}) => {
         method: "GET",
         });
         let data = await response.json();
-        console.log(data.history);
+        let history = data.history;
+        let historyArray = new Array();
+        for (var item in history) {
+            if (history.hasOwnProperty(item)){
+                historyArray.push(history[item]);
+            }
+        }
+        console.log(historyArray);
         setSelectedAccount(data.history);
 
     };
