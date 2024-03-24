@@ -21,6 +21,7 @@ const ModalTwo = ({open, onClose}) => {
 
     };
 
+    
     const handleShowEntireHistory = async () => {
         const response = await fetch("http://localhost:5001/history", {
         credentials: "include",
