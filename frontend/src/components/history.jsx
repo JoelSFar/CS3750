@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./popUp.css";
+//import "./popUp.css";
+
 
 const History = (props) => (
     <tr>
@@ -66,15 +67,21 @@ const ModalTwo = ({open, onClose}) => {
                     <p onClick={onClose} className="txt">X</p>
                     <br></br>
                     <h1>History</h1>
-                    <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleAccountChange} />
-                    <label htmlFor="checking">Checking</label>
-                    <input type="radio" id="savings" name="selected_account" value="savings" onChange={handleAccountChange} />
-                    <label htmlFor="savings">Savings</label>
-                    <input type="radio" id="yield" name="selected_account" value="yield" onChange={handleAccountChange} />
-                    <label htmlFor="yield">High Yield</label>
-                    <button onClick={handleShowHistory}>Show History for Specific Account</button>
-                    <button onClick={handleShowEntireHistory}>Show History for Entire Account</button>
-                    <h3 id="history"></h3>
+                    <div classname="input">
+                        <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleAccountChange} />
+                        <label htmlFor="checking">Checking</label>
+                        <input type="radio" id="savings" name="selected_account" value="savings" onChange={handleAccountChange} />
+                        <label htmlFor="savings">Savings</label>
+                        <input type="radio" id="yield" name="selected_account" value="yield" onChange={handleAccountChange} />
+                        <label htmlFor="yield">High Yield</label>
+                    </div>
+                    <br></br>
+                    
+                    <div classname="input">
+                        <button onClick={handleShowHistory}>Show History for Specific Account</button>
+                        <button onClick={handleShowEntireHistory}>Show History for Entire Account</button>
+                        <h3 id="history"></h3>
+                    </div>
                 </div>
             </div>
     );
