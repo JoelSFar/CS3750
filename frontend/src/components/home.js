@@ -5,6 +5,7 @@ import Modal from './transferPop';
 import ModalTwo from './history';
 
 
+
 function AccountInfo({ name, balance }) {
     return (
         <div className='AccountInfo'>
@@ -144,9 +145,9 @@ if (loading) {
 
 return (
     <>
-    <h1>YOU LOGGED IN</h1>
+    <h1>YOU ARE LOGGED IN</h1>
     <AccountsList accounts={accountInfo}/>
-    <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleAccountChange} />
+        <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleAccountChange} />
         <label htmlFor="checking">Checking</label>
         <input type="radio" id="savings" name="selected_account" value="savings" onChange={handleAccountChange} />
         <label htmlFor="savings">Savings</label>

@@ -4,6 +4,7 @@ import Navbar from "./components/nav";
 import Login from "./components/login"
 import Register from "./components/register"
 import Home from "./components/home"
+import "./style.css";
 
 const App = () => {
 	return (
