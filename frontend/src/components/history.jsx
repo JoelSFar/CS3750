@@ -27,14 +27,14 @@ const ModalTwo = ({open, onClose}) => {
         let history = data.history;
         setSelectedAccount(history);
         document.getElementById('history').innerHTML = history.map(record => 
-            `<div>
-              <div>Account Name: ${record.account}</div>
-              <div>Transaction Date: ${record.date}</div>
-              <div>Transaction Type: ${record.type}</div>
-              <div>Transaction Amount: ${record.amount}</div> 
-              <div>Transaction Description: ${record.description}</div>
+            `
+              <td>${record.account}</td>
+              <td>Transaction Date: ${record.date}</td>
+              <td>Transaction Type: ${record.type}</td>
+              <td>Transaction Amount: ${record.amount}</td> 
+              <td>Transaction Description: ${record.description}</td>
               <br><br>
-            </div>`
+            </table>`
         ).join('');
     };
 
@@ -49,14 +49,13 @@ const ModalTwo = ({open, onClose}) => {
         let history = data.history;
         setSelectedAccount(history);
         document.getElementById('history').innerHTML = history.map(record => 
-            `<div>
-              <div>Account Name: ${record.account}</div>
-              <div>Transaction Date: ${record.date}</div>
-              <div>Transaction Type: ${record.type}</div>
-              <div>Transaction Amount: ${record.amount}</div> 
-              <div>Transaction Description: ${record.description}</div>
+            `
+              <td>Account Name: ${record.account}</td>
+              <td>Transaction Date: ${record.date}</td>
+              <td>Transaction Type: ${record.type}</td>
+              <td>Transaction Amount: ${record.amount}</td> 
+              <td>Transaction Description: ${record.description}</td>
               <br><br>
-            </div>`
         ).join('');
         };
 
@@ -80,7 +79,16 @@ const ModalTwo = ({open, onClose}) => {
                     <div classname="input">
                         <button onClick={handleShowHistory}>Show History for Specific Account</button>
                         <button onClick={handleShowEntireHistory}>Show History for Entire Account</button>
-                        <h3 id="history"></h3>
+                        <table>
+                            <th>Name</th>
+                            <th>Transaction Date</th>
+                            <th>Transaction Type</th>
+                            <th>Transaction Amount</th>
+                            <th>Transaction Description</th>
+                            <tr id="history">
+
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
