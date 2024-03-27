@@ -10,7 +10,7 @@ function AccountInfo({ name, balance }) {
     return (
         <div className='AccountInfo'>
             <h2>{name}</h2>
-            <p>Balance: {balance}</p>
+            <p>Balance: ${balance}</p>
         </div>
     );
 }
