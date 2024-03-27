@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./popUp.css";
+//import "./popUp.css";
 
 const Modal = ({open, onClose}) => {
     let test = false; 
@@ -40,29 +40,30 @@ const Modal = ({open, onClose}) => {
                     <br></br>
                     <div className="input">
                         <h2>Transfer From: </h2>
-                        <input type="radio" id="customer" name="from" value="checking" onChange={handleFromChange}/>
-                        <label htmlFor="customer" className="txt">Checking</label>
-                        <input type="radio" id="employee" name="from" value="savings" onChange={handleFromChange}/>
-                        <label htmlFor="employee" className="txt">Savings</label>
-                        <input type="radio" id="admin" name="from" value="yield" onChange={handleFromChange}/>
-                        <label htmlFor="admin" className="txt">High Yield</label>
+                        <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleFromChange} />
+                        <label htmlFor="checking">Checking</label>
+                        <input type="radio" id="savings" name="selected_account" value="savings" onChange={handleFromChange} />
+                        <label htmlFor="savings">Savings</label>
+                        <input type="radio" id="yield" name="selected_account" value="yield" onChange={handleFromChange} />
+                        <label htmlFor="yield">High Yield</label>
                     </div>
                     
                     <div className="input">
                         <h2>Transfer To: </h2>
-                        <input type="radio" id="test" name="target" value="checking" onChange={handleTargetChange}/>
-                        <label htmlFor="customer" className="txt">Checking</label>
-                        <input type="radio" id="testOne" name="target" value="savings" onChange={handleTargetChange}/>
-                        <label htmlFor="employee" className="txt">Savings</label>
-                        <input type="radio" id="testTwo" name="target" value="yield" onChange={handleTargetChange}/>
-                        <label htmlFor="admin" className="txt">High Yield</label>
-                    </div>
+                        <input type="radio" id="checking" name="selected_account" value="checking" onChange={handleTargetChange} />
+                        <label htmlFor="checking">Checking</label>
+                        <input type="radio" id="savings" name="selected_account" value="savings" onChange={handleTargetChange} />
+                        <label htmlFor="savings">Savings</label>
+                        <input type="radio" id="yield" name="selected_account" value="yield" onChange={handleTargetChange} />
+                        <label htmlFor="yield">High Yield</label>
+                        </div>
                   
                     <div className='input'>
-                        <h2 className="txt">Input amount: </h2>
-                        <input type='text' value={amount} onChange={(event) => setAmmount(event.target.value)}></input>
+                        <h2>Input amount: </h2>
+                        <input type='text' value={ammount} onChange={(event) => setAmmount(event.target.value)}></input>
                     </div>
-                    <button type="submit" onClick={accountChange}>Submit</button>
+                    <br></br>
+                    <button type="submit">Submit</button>
                 </div>
             </div>
     );

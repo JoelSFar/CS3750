@@ -90,15 +90,23 @@ bankRoutes.get("/history/:accountType", async (req, res) => {
       res.json({ message: "user not found" });
     }
         //Grab all user's logs (should be an array of json objects)
-        const userLogs = userRecord.Logs;
+        var userLogs = userRecord.history;
+        //userLogs = JSON.parse(userLogs);
+        //userLogs = JSON.parse(userLogs);
+        //var entries = Object.entries(userLogs);
+        // change
+        console.log(userLogs);
+        console.log(req.params.accountType);
         let accountLogs = new Array();
-        userLogs.foreach(getAccountLogs);
-    
-        function getAccountLogs(log){
-          if (log.MainAccount === req.params.accountType) {
-            accountLogs.push(log);
+
+        for (var item in userLogs) {
+          if (userLogs.hasOwnProperty(item)){
+            if (userLogs[item].account == req.params.accountType){
+              accountLogs.push(userLogs[item]);
             }
+          }
         }
+        console.log(accountLogs);
 
     // user found
     res.json({
@@ -110,6 +118,28 @@ bankRoutes.get("/history/:accountType", async (req, res) => {
   }
 });
 
+bankRoutes.get("/history", async (req, res) => {
+  if (req.session.userName && req.session.passwordHash) {
+    const userRecord = await get_user_by_hash(
+      req.session.userName,
+      req.session.passwordHash
+    );
+
+    if (!userRecord) {
+      res.json({ message: "user not found" });
+    }
+        //Grab all user's logs (should be an array of json objects)
+        const userLogs = userRecord.history;
+
+    // user found
+    res.json({
+      history: userLogs,
+    });
+  } else {
+    console.log("not logged int");
+    res.json({ message: "not logged in" });
+  }
+});
 
 // have not tested yet, but it is based on the get so it should be close, note from Joel use this 
 bankRoutes.post("/deposit", async (req, res) => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router";
-
+import "./popUp.css";
 
 export default function Register() {
     // 0-9 one number, and a letter, 6 = 6length
