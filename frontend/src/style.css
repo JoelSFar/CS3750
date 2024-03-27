@@ -50,6 +50,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
 }
 
 .modalContainer {
@@ -59,6 +60,7 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  overflow-y: auto;
 }
 
 /* AccountInfo and AccountsList components */
