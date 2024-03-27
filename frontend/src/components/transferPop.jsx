@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./popUp.css";
 
 const Modal = ({open, onClose}) => {
-
+    let test = false; 
 
     const [from, setFrom] = useState('');
     const [target, setTarget] = useState('');

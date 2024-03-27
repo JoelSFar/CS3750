@@ -38,15 +38,44 @@ const [historyViewable, setHistoryViewable] = useState(false);
 const [action, setUse] = useState('');
 const [amount, setAmount] = useState('');
 const [selectedAccount, setSelectedAccount] = useState('');
+const [test, setTest] = useState(false);
 
-
+/*
 useEffect(() => {
     const fetchData = async () => {
+        console.log("in home use effect");
+        const response = await fetch("http://localhost:5001/prev", { method: 'GET', credentials: 'include'});
+        const data = await response.json();
+        //if (!data)
+        //{
+          //  navigate("/");
+        //}
+    };
+    fetchData();
+}, []);
 
+useEffect = (() => 
+{
+    const getInfo = async () => {
+        const userInfoFetch = await fetch("http://localhost:5001/accounts", { method: 'GET', credentials: 'include'});
+        const userdata = await userInfoFetch.json();
+        console.log("got user account data:", userdata);
+        setAccountInfo(userdata.accounts);
+        console.log("user data:", accountInfo);
+    };
+    getInfo();
+}, [test]);
+*/
+
+useEffect(() => {
+
+    const fetchData = async () => {
+        
         try {
             console.log("in home use effect");
             const response = await fetch("http://localhost:5001/prev", { method: 'GET', credentials: 'include'});
             const data = await response.json();
+            console.log("hello world");
             if (data) {
                 const userInfoFetch = await fetch("http://localhost:5001/accounts", { method: 'GET', credentials: 'include'});
                 const userdata = await userInfoFetch.json();
@@ -68,10 +97,22 @@ useEffect(() => {
 
     };
     fetchData();
-}, []);
+}, [test]);
+
+
 
 
 const handleWithdrawDeposit = async () => {
+    if (test === true)
+    {
+        setTest(false);
+        console.log(test);
+    }
+    else if (test === false)
+    {
+        setTest(true);
+        console.log(test);
+    }
     if (!amount) {
         return;
     }
@@ -83,6 +124,7 @@ const handleWithdrawDeposit = async () => {
     }
 
     if (action === 'w') {
+        console.log("withdrawl");
         const response = await fetch("http://localhost:5001/withdraw", {
             credentials: "include",
             method: "POST",
@@ -97,6 +139,7 @@ const handleWithdrawDeposit = async () => {
         console.log(`Withdraw ${parsedAmount} from ${selectedAccount}`);
         
     } else if (action === 'd') {
+        console.log("deposit");
         const response = await fetch("http://localhost:5001/deposit", {
             credentials: "include",
             method: "POST",
@@ -109,6 +152,7 @@ const handleWithdrawDeposit = async () => {
             window.alert(error);
         });
         console.log(`Deposit ${parsedAmount} to ${selectedAccount}`);
+        
     }
 };
 
@@ -130,6 +174,20 @@ const handleOpen = async () =>
 {
     setOpen(true);
 }
+
+const handleClose = async () =>
+{
+    setOpen(false);
+    if (test === true)
+    {
+        setTest(false);
+    }
+    else if (test === false)
+    {
+        setTest(true);
+    }
+}
+
 
 const handleclick = async (event) => {
     event.preventDefault();
@@ -168,7 +226,7 @@ return (
             <button onClick={handleclick}>Logout</button>
         </div>
             </div>
-    <Modal open = {open} onClose={() => setOpen(false)} />
+    <Modal open = {open} onClose={handleClose} />
     <ModalTwo open ={historyViewable} onClose={() => setHistoryViewable(false)} />
     </>
 )
