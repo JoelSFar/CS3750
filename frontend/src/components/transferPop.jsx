@@ -60,7 +60,7 @@ const Modal = ({open, onClose}) => {
                   
                     <div className='input'>
                         <h2>Input amount: </h2>
-                        <input type='text' value={ammount} onChange={(event) => setAmmount(event.target.value)}></input>
+                        <input type='text' value={amount} onChange={(event) => setAmmount(event.target.value)}></input>
                     </div>
                     <br></br>
                     <button type="submit">Submit</button>
