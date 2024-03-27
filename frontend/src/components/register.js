@@ -3,20 +3,23 @@ import { useNavigate } from "react-router";
 import "./popUp.css";
 
 export default function Register() {
-    // 0-9 one number, and a letter, 6 = 6length
-    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6}$/;
+    // At least one lowercase alphabet i.e. [a-z]
+    // At least one uppercase alphabet i.e. [A-Z]
+    // At least one Numeric digit i.e. [0-9]
+    // At least one special character i.e. [‘@’, ‘$’, ‘.’, ‘#’, ‘!’, ‘%’, ‘*’, ‘?’, ‘&’, ‘^’]
+    // Also, the total length must be in the range [8-15] 
+    // https://www.geeksforgeeks.org/javascript-program-to-validate-password-using-regular-expressions/
+    // const passwordRegex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@.#$!%*?&]{3,15}$/;
 
     const [name, setName] = useState('');
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
     const [res, setRes] = useState('');
-    // Initialize state to store selected radio button value
-    const [role, setRole] = useState('');
 
-    // Function to update state based on which radio button is selected
-    const handleRoleChange = (event) => {
-        setRole(event.target.value);
-    };
+
+
 
 
     const navigate = useNavigate();
@@ -32,10 +35,6 @@ export default function Register() {
             alert("passwords dont match");
             return;
         }
-        if (!role) {
-            alert("select a role");
-            return;
-        }
 
         const response = await fetch("http://localhost:5001/register", {
             credentials: 'include',
@@ -46,7 +45,6 @@ export default function Register() {
             body: JSON.stringify({
                 userName: name,
                 password: password1,
-                role: role,
             }),
         }).catch(error => {
             window.alert(error);
@@ -85,16 +83,6 @@ export default function Register() {
                             onChange={(event) => setPassword2(event.target.value)}
                             placeholder="verify password"
                         />
-                    </div>
-                </div>
-                <div>
-                    <div>
-                    <input type="radio" id="customer" name="fav_language" value="customer" onChange={handleRoleChange} />
-                    <label htmlFor="customer">Customer</label>
-                    <input type="radio" id="employee" name="fav_language" value="employee" onChange={handleRoleChange} />
-                    <label htmlFor="employee">Employee</label>
-                    <input type="radio" id="admin" name="fav_language" value="admin" onChange={handleRoleChange} />
-                    <label htmlFor="admin">Admin</label>
                     </div>
                 </div>
                 <div>
